@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="396" height="135" viewBox="0 0 396 135">
+  <g id="Group_17" data-name="Group 17" transform="translate(-142 -4953.767)">
+    <g id="Rectangle_14" data-name="Rectangle 14" transform="translate(142 4953.767)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="396" height="135" stroke="none"/>
+      <rect x="0.5" y="0.5" width="395" height="134" fill="none"/>
+    </g>
+    <g id="logo" transform="translate(171 4982.526)">
+      <path id="Path_9" data-name="Path 9" d="M168.733,393.846A6.272,6.272,0,1,0,175,400.118,6.279,6.279,0,0,0,168.733,393.846Z" transform="translate(162.422 -343.431)" fill="#ff5700"/>
+      <path id="Path_8" data-name="Path 8" d="M168.733,393.846A6.272,6.272,0,1,0,175,400.118,6.279,6.279,0,0,0,168.733,393.846Z" transform="translate(161.168 -345.94)" fill="#0286e7"/>
+      <text id="Marvee" transform="translate(71.759 59.498)" fill="#4b4b4b" font-size="61" font-family="Montserrat-Bold, Montserrat" font-weight="700"><tspan x="0" y="0">Marvee</tspan></text>
+      <g id="ic-bag" transform="translate(0 0.241)">
+        <path id="bag" d="M30.075,4.154A10.384,10.384,0,0,1,40.459,14.538v2.077H19.691V14.538A10.384,10.384,0,0,1,30.075,4.154ZM44.613,16.614V14.538a14.538,14.538,0,1,0-29.075,0v2.077H1V58.15a8.307,8.307,0,0,0,8.307,8.307H50.843A8.307,8.307,0,0,0,59.15,58.15V16.614ZM5.154,20.768H55V58.15A4.154,4.154,0,0,1,50.843,62.3H9.307A4.154,4.154,0,0,1,5.154,58.15Z" transform="translate(-1)" fill="#0286e7"/>
+        <path id="bag-2" data-name="bag" d="M30.075,4.154A10.384,10.384,0,0,1,40.459,14.538v2.077H19.691V14.538A10.384,10.384,0,0,1,30.075,4.154ZM44.613,16.614V14.538a14.538,14.538,0,1,0-29.075,0v2.077H1V58.15a8.307,8.307,0,0,0,8.307,8.307H50.843A8.307,8.307,0,0,0,59.15,58.15V16.614ZM5.154,20.768H55V58.15A4.154,4.154,0,0,1,50.843,62.3H9.307A4.154,4.154,0,0,1,5.154,58.15Z" transform="translate(7.336 10.058)" fill="#ff5700"/>
+      </g>
+    </g>
+  </g>
+</svg>

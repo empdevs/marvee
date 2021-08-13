@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="44" viewBox="0 0 1640 44">
+  <g id="judul-kategori" transform="translate(-140 -1128)">
+    <line id="Line_1" data-name="Line 1" x2="1640" transform="translate(140 1171.5)" fill="none" stroke="#707070" stroke-width="1"/>
+    <text id="KATEGORI" transform="translate(193 1159)" fill="#707070" font-size="32" font-family="Montserrat-SemiBold, Montserrat" font-weight="600"><tspan x="0" y="0">KATEGORI</tspan></text>
+    <g id="tags-fill" transform="translate(141 1130)">
+      <path id="Path_10" data-name="Path 10" d="M2,3.194A2.194,2.194,0,0,1,4.194,1H14.255a2.194,2.194,0,0,1,1.551.642L31.164,17a2.194,2.194,0,0,1,0,3.1L21.1,30.164a2.194,2.194,0,0,1-3.1,0L2.643,14.806A2.194,2.194,0,0,1,2,13.255ZM9.679,11.97A3.291,3.291,0,1,0,6.388,8.679,3.291,3.291,0,0,0,9.679,11.97Z" transform="translate(2.388 2)"/>
+      <path id="Path_11" data-name="Path 11" d="M2.837,14.709a2.194,2.194,0,0,1-.643-1.551V2A2.194,2.194,0,0,0,0,4.194V14.255a2.194,2.194,0,0,0,.642,1.551L16,31.164a2.194,2.194,0,0,0,3.1,0l.094-.094L2.837,14.709Z" transform="translate(0 1.194)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="1920" height="1080" fill="#fff"/>
+    </clipPath>
+    <clipPath id="clip-bg-login">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="bg-login" clip-path="url(#clip-bg-login)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <g id="bg-login-2" data-name="bg-login" clip-path="url(#clip-path)">
+      <rect id="Rectangle_1" data-name="Rectangle 1" width="538" height="1080" transform="translate(1382)" fill="#0286e7"/>
+    </g>
+  </g>
+</svg>
