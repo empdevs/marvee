@@ -61,7 +61,7 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
                     <form>
                         <div class="form-group m-0">
                           <input type="text" class="form-control float-left mr-1" id="search" placeholder="Cari Produk...">
-                        <button type="submit" class="btn btn-primary"><img src="images/search.svg" alt=""></button>
+                        <button type="submit" class="btn btn-primary img-fluid"><img src="images/search.svg" alt=""></button>
                       </form>
                 </li>
                 <li class="nav-item d-inline-block ml-4">
