@@ -16,11 +16,11 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="easySelect/easySelectStyle.css">
-
     <title>Marvee</title>
   </head>
+  
   <body>
-<header>
+  <header>
       <ul class="nav">
         <div class="container">
           <div class="row">
@@ -96,4 +96,5 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
         </div><!--end container-->
       </nav>
     </header>
+      
     

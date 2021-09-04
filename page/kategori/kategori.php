@@ -22,7 +22,7 @@
                                 <th scope="row"><?=$no;?></th>
                                 <td><?=$k['nama_kategori']; ?></td>
                                 <td><?=$k['keterangan'];?></td>
-                                <td><img src="images/barang/<?=$k['gambar']?>" class="img-fluid" alt="" style="width: 50px; width:50px;"></td>
+                                <td><img src="images/barang/<?=$k['gambar_kategori']?>" class="img-fluid" alt="" style="width: 50px; width:50px;"></td>
                                 <td><a href="?page=kategori&action=ubah&id=<?=$k['kategori_id']?>" class="btn btn-success">Ubah</a>
                                     <a href="?page=kategori&action=hapus&id=<?=$k['kategori_id']?>" class="btn btn-danger rounded-0">Hapus</a>
                                 </td>

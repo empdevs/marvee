@@ -43,11 +43,9 @@ $id=isset($_GET["id"])?$_GET["id"]:false;
             <div class="col-lg-9">
                 <div class="kanan">
                     <div class="konten">
-                    <?php if($page): ?>
-                        <?php if($action):?>
-                            <?php require_once("page/$page/$action.php");?>
-                            <?php exit; ?>
-                        <?php endif; ?>
+                    <?php if($page && $action):?>
+                        <?php require_once("page/$page/$action.php");?>
+                    <?php elseif($page): ?>
                         <?php require_once("page/$page/$page.php");?>
                     <?php else: ?>
                         <?php require_once("page/pesanan/pesanan.php");?> 

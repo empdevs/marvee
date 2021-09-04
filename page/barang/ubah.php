@@ -14,12 +14,21 @@
 ?>
 <div class="judul text-white k-1 mb-1"><img src="images/person-fill.svg" alt="" class="mr-2">Ubah Data <?= $page;?>
 </div>
-        <?php $barang=data("SELECT * FROM","barang WHERE barang_id='$id'");?>
+        <?php $barang=data("SELECT * FROM","barang INNER JOIN kategori ON barang.kategori_id = kategori.kategori_id WHERE barang_id = '$id'");?>
         <?php $kategori=data("SELECT * FROM","kategori");?>
+        <?php $ukuran = data("SELECT * FROM","ukuran") ?>
+        <?php $ukuran_user = data("SELECT * FROM","barang_ukuran INNER JOIN ukuran ON barang_ukuran.ukuran_id = ukuran.ukuran_id WHERE barang_id = '$id'") ?>
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="barang">Kategori</label>
+            <label for="barang" class="m-0">Kategori</label><br>
+            <?php foreach($barang as $b):?>
+                <small class="text-muted">Kategori sebelumnya (<?= $b["nama_kategori"] ?>)</small>
+            <?php endforeach; ?>
             <select class="form-control" name="kategori_id" id="kategori_id">
+            <?php foreach($barang as $b):?>
+               
+                <option disabled value="<?=$b["kategori_id"]?>"><?= $b["nama_kategori"];?></option>
+            <?php endforeach; ?>
             <?php foreach($kategori as $k):?>
                 <option value="<?=$k["kategori_id"]?>"><?= $k["nama_kategori"];?></option>
             <?php endforeach; ?>
@@ -36,6 +45,18 @@
         <div class="form-group">
             <label for="harga">Harga</label>
             <input type="number" class="form-control" id="harga" name="harga" value="<?=$b["harga"]?>">
+        </div>
+        <div class="form-group">
+            <label for="harga" class="m-0">Ukuran</label><br>
+            <small class="text-muted">Ukuran sebelumnya (<?php foreach($ukuran_user as $uu): ?>
+                                    <?= $uu["nama_ukuran"]; ?>,
+                                 <?php endforeach ?>)
+            </small>
+            <select class="form-select" name="ukuran[]" id="demo" multiple="multiple">
+                <?php foreach($ukuran as $u): ?>
+                    <option value="<?=$u['ukuran_id']?>"><?=$u['nama_ukuran']?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="form-group">
             <label for="deskripsi">Deskripsi</label>

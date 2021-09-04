@@ -35,7 +35,7 @@
         </div>
         <div class="form-group">
             <label for="harga">Ukuran</label>
-            <select name="ukuran[]" id="demo">
+            <select class="form-select" name="ukuran[]" id="demo" multiple="multiple">
                 <?php foreach($ukuran as $u): ?>
                     <option value="<?=$u['ukuran_id']?>"><?=$u['nama_ukuran']?></option>
                 <?php endforeach; ?>

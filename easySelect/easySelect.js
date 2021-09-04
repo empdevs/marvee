@@ -307,7 +307,7 @@
 $("#demo").easySelect({
   buttons: false,
   search: false,
-  placeholder: "Choose Country",
+  placeholder: "Choose Size",
   placeholderColor: "#524781",
   selectColor: "#524781",
   itemTitle: "Countrys selected",

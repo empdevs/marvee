@@ -95,31 +95,23 @@ if($data_keranjang){//jika data keranjang ada ?
                         <div class="row my-4">
                                 <div class="col-6">Ukuran</div>
                                 <div class="col-6">
-                                <?php $ukuran=data("SELECT nama_ukuran FROM","ukuran");?>
-                                <select name="ukuran" id="ukuran" class="form-select">
+                                <?php $ukuran=data("SELECT * FROM","ukuran INNER JOIN barang_ukuran ON barang_ukuran.ukuran_id = ukuran.ukuran_id INNER JOIN barang ON barang.barang_id = barang_ukuran.barang_id WHERE barang.barang_id = $barang_id");?>
                                 <?php foreach($ukuran as $uk):?>
-                                    <div class="custom-control custom-radio mx-2">
-                                        <?php $customcheck = 'customCheck';
-                                                $customcheck .= $uk['nama_ukuran'];
+                                    <div class="form-check form-check-inline">
+                                        <?php 
+                                                $customcheck = $uk['nama_ukuran'];
                                         ?>
-                                    <option value="<?=$uk["nama_ukuran"]?>"><?=$uk["nama_ukuran"]?></option>
-                                <label class="custom-control-label" for="<?=$customcheck?>"><?=$uk['nama_ukuran']?></label>
-                                </div>
+                                            <input class="form-check-input" type="radio" name="ukuran" id="inlineRadio<?=$customcheck?>" value="<?= $uk["ukuran_id"] ?>">
+                                            <label class="form-check-label" for="inlineRadio1"><?= $uk["nama_ukuran"] ?></label>
+                                    </div>
                                 <?php endforeach;?>
-                                </select>
                                 
-                                <!-- <select name="ukuran" id="ukuran" class="form-control form-control-sm text-center">
-                                    <option value="<?=$uk['nama_ukuran'];?>"><?=$uk['nama_ukuran'];?></option>
-                                </select> -->
                                 </div><!--end col-->
                             </div><!--end row-->
                             <div class="row my-4">
                                     <div class="col-6">Kuantitas</div>
                                     <div class="col-6">
                                         <input type="text" name="kuantitas" class="form-control" style="width: 40%;" value="1" min="1" max="100">
-                                            <!-- <button type="button" class="btn btn-danger">-</button>
-                                            <input type="text" class="form-control" id="kuantitas" aria-describedby="kuantitas" value="10" min="1" max="100">
-                                            <button type="button" class="btn btn-success">+</button> -->
                                     </div><!--end col-->
                             </div><!--end row-->
                     

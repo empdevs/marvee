@@ -31,7 +31,7 @@
         $tmp_name = $_FILES["gambar"]["tmp_name"];
         $ukuran = $_FILES["gambar"]["size"];
 
-        if($ukuran === 1000000){
+        if($ukuran === 2000000){
             echo "
                 <script>
                     alert('Admin ganteng filenya terlalu besar');
@@ -41,24 +41,24 @@
         }
 
         
-        $data=data("SELECT gambar FROM","kategori WHERE kategori_id='$kategori_id'");
+        $data=data("SELECT gambar_kategori FROM","kategori WHERE kategori_id='$kategori_id'");
 
         if($nama_gambar || $tmp_name || $ukuran){
             foreach($data as $d){
             
-                $hapus_file=unlink("images/barang/".$d["gambar"]);
+                $hapus_file=unlink("images/barang/".$d["gambar_kategori"]);
     
-                if($hapus_file == "True"){
+                if($hapus_file == true){
                     $nama_gambar=strtolower($nama_gambar);
                     move_uploaded_file($tmp_name,"images/barang/".$nama_gambar);
-                    mysqli_query($koneksi,"UPDATE kategori SET nama_kategori='$nama_kategori',keterangan='$keterangan',gambar='$nama_gambar' WHERE kategori_id = '$kategori_id' ");       
+                    mysqli_query($koneksi,"UPDATE kategori SET nama_kategori='$nama_kategori',keterangan='$keterangan',gambar_kategori='$nama_gambar' WHERE kategori_id = '$kategori_id' ");       
                 }
     
             }
         }else{
             foreach($data as $d){
-                $gambar_lama=$d["gambar"];
-                mysqli_query($koneksi,"UPDATE kategori SET nama_kategori='$nama_kategori',keterangan='$keterangan',gambar='$gambar_lama' WHERE kategori_id = '$kategori_id' ");
+                $gambar_lama=$d["gambar_kategori"];
+                mysqli_query($koneksi,"UPDATE kategori SET nama_kategori='$nama_kategori',keterangan='$keterangan',gambar_kategori='$gambar_lama' WHERE kategori_id = '$kategori_id' ");
             }
                    
         }
@@ -124,7 +124,8 @@
         $nama_barang=htmlspecialchars($data["nama_barang"]);
         $harga=htmlspecialchars($data["harga"]);
         $deskripsi=htmlspecialchars($data["deskripsi"]);
-        
+        $ukuran_baju=$data["ukuran"];
+
         $nama_gambar = $_FILES["gambar"]["name"];
         $tmp_name = $_FILES["gambar"]["tmp_name"];
         $ukuran = $_FILES["gambar"]["size"];
@@ -164,7 +165,17 @@
         }
 
         move_uploaded_file($tmp_name,"images/barang/".$nama_file_baru);
+        
         mysqli_query($koneksi,"INSERT INTO barang VALUES ('','$kategori_id','$nama_barang','$harga','$deskripsi','$nama_file_baru')");
+        
+        $id_barang = data("SELECT barang_id FROM","barang ORDER BY barang_id DESC LIMIT 1");
+        foreach($id_barang as $ib){
+            $barang_id = $ib["barang_id"];
+        }
+
+        for($i=0; $i < count($ukuran_baju); $i++){
+            mysqli_query($koneksi,"INSERT INTO barang_ukuran VALUES ($barang_id,$ukuran_baju[$i])");
+        }
 
         return mysqli_affected_rows($koneksi);
     }
@@ -176,12 +187,13 @@
         $nama_barang=htmlspecialchars($data["nama_barang"]);
         $harga=htmlspecialchars($data["harga"]);
         $deskripsi=htmlspecialchars($data["deskripsi"]);
+        $ukuran_baju = !empty($data["ukuran"])?$data["ukuran"]:null;
 
         $nama_gambar = $_FILES["gambar"]["name"];
         $tmp_name = $_FILES["gambar"]["tmp_name"];
         $ukuran = $_FILES["gambar"]["size"];
 
-        if($ukuran === 1000000){
+        if($ukuran === 2000000){
             echo "
                 <script>
                     alert('Admin ganteng filenya terlalu besar');
@@ -194,6 +206,12 @@
         $gambar=data("SELECT gambar FROM","barang WHERE barang_id='$barang_id'");
 
         if($nama_gambar || $tmp_name || $ukuran){
+
+            if($ukuran_baju){
+                for($i=0; $i<count($ukuran_baju); $i++){
+                    mysqli_query($koneksi,"UPDATE barang_ukuran SET barang_id = '$barang_id',ukuran_id='$ukuran_baju[$i]'");
+                }
+            }
             foreach($gambar as $g){
             
                 $hapus_file=unlink("images/barang/".$g["gambar"]);
@@ -206,11 +224,17 @@
     
             }
         }else{
+            if(!empty($ukuran_baju)){
+                mysqli_query($koneksi,"DELETE FROM barang_ukuran WHERE barang_id = '$barang_id'");
+                for($i=0; $i<count($ukuran_baju); $i++){
+                    mysqli_query($koneksi,"INSERT INTO barang_ukuran VALUES ($barang_id,$ukuran_baju[$i]");
+                }
+            }
+
             foreach($gambar as $g){
                 $gambar_lama=$g["gambar"];
                 mysqli_query($koneksi,"UPDATE barang SET kategori_id='$kategori_id',nama_barang='$nama_barang',harga='$harga',deskripsi='$deskripsi',gambar='$gambar_lama' WHERE barang_id = '$barang_id' ");
 
-                // mysqli_query($koneksi,"UPDATE pengiriman SET nama_pengiriman='$nama_pengiriman',ongkir='$ongkir' WHERE pengiriman_id='$pengiriman_id'");
             }
                    
         }

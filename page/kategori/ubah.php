@@ -30,8 +30,8 @@
         </div>
         <div class="form-group">
             <label for="gambar">Pilih Gambar</label><br>
-            <input type="file" class="form-control-file d-inline" id="gambar" name="gambar" value="<?= $isi_kategori["gambar"];?>">
-            <img src="images/barang/<?= $isi_kategori["gambar"];?>" alt="" style="width: 100px; height:100px;">
+            <input type="file" class="form-control-file d-inline" id="gambar" name="gambar" value="<?= $isi_kategori["gambar_kategori"];?>">
+            <img src="images/barang/<?=$isi_kategori["gambar_kategori"];?>" alt="" style="width: 100px; height:100px;">
         </div>
         <button type="submit" class="btn btn-primary" name="ubah">Ubah</button>
     <?php endforeach; ?>

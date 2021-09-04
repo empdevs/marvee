@@ -1,7 +1,7 @@
 <?php
-     $data=data("SELECT gambar FROM","kategori WHERE kategori_id='$id'");
+     $data=data("SELECT gambar_kategori FROM","kategori WHERE kategori_id='$id'");
      foreach($data as $d){
-         unlink("images/barang/".$d["gambar"]);
+         unlink("images/barang/".$d["gambar_kategori"]);
      }
     $hapus=hapus("kategori WHERE kategori_id=$id");
     if($hapus > 0){

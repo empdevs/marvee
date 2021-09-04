@@ -68,7 +68,7 @@
           <div class="col-lg-4">
             <a href="index.php?kategori_id=<?=$k['kategori_id']?>">
             <div class="item-kategori my-2">
-              <img class="float-left mx-3 img-fluid" src="images/barang/<?=$k['gambar'];?>" alt="" style="width: 116px; height:137px;">
+              <img class="float-left mx-3 img-fluid" src="images/barang/<?=$k['gambar_kategori'];?>" alt="" style="width: 116px; height:137px;">
               <div class="keterangan-kategori">
                 <h2 class="m-0"><?=$k['nama_kategori'];?></h2>
                 <p><?=$k['keterangan'];?></p>
@@ -90,7 +90,7 @@
           </div>
         </div><!--end row-->
         <div class="row">
-        <?php $penjualan_terbaik=data("SELECT * FROM","barang ORDER BY barang_id DESC LIMIT 3");
+        <?php $penjualan_terbaik=data("SELECT * FROM","barang ORDER BY barang_id DESC LIMIT 6");
         ?><!--ambil data di tabel barang diambil hanya 3 dari yang paling terakhir-->
         <?php foreach($penjualan_terbaik as $pt): ?><!--keluarin data-->
           <div class="col-lg-4">
@@ -113,7 +113,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <img class="img-fluid" src="images/bookmark-star-fill.svg" alt=""><h1 class="d-inline ml-3">SEMUA KATEGORI</h1>
+            <img class="img-fluid" src="images/bookmark-star-fill.svg" alt=""><h1 class="d-inline ml-3">SEMUA BARANG</h1>
             <hr>
           </div><!--end col-->
         </div><!--end row-->
