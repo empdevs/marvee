@@ -15,6 +15,7 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="easySelect/easySelectStyle.css">
 
     <title>Marvee</title>
   </head>

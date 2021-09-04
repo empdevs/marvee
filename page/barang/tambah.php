@@ -10,6 +10,7 @@
                 ";
             }
     }
+    $ukuran=data("SELECT * FROM","ukuran");
 ?>
 <div class="judul text-white k-1 mb-1"><img src="images/person-fill.svg" alt="" class="mr-2">Tambah Data <?= $page;?>
 </div>
@@ -31,6 +32,14 @@
         <div class="form-group">
             <label for="harga">Harga</label>
             <input type="number" class="form-control" id="harga" name="harga">
+        </div>
+        <div class="form-group">
+            <label for="harga">Ukuran</label>
+            <select name="ukuran[]" id="demo">
+                <?php foreach($ukuran as $u): ?>
+                    <option value="<?=$u['ukuran_id']?>"><?=$u['nama_ukuran']?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
         <div class="form-group">
             <label for="deskripsi">Deskripsi</label>
