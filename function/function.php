@@ -187,7 +187,7 @@
         $nama_barang=htmlspecialchars($data["nama_barang"]);
         $harga=htmlspecialchars($data["harga"]);
         $deskripsi=htmlspecialchars($data["deskripsi"]);
-        $ukuran_baju = !empty($data["ukuran"])?$data["ukuran"]:null;
+        $ukuran_id = !empty($data["ukuran"])?$data["ukuran"]:null;
 
         $nama_gambar = $_FILES["gambar"]["name"];
         $tmp_name = $_FILES["gambar"]["tmp_name"];
@@ -207,9 +207,9 @@
 
         if($nama_gambar || $tmp_name || $ukuran){
 
-            if($ukuran_baju){
-                for($i=0; $i<count($ukuran_baju); $i++){
-                    mysqli_query($koneksi,"UPDATE barang_ukuran SET barang_id = '$barang_id',ukuran_id='$ukuran_baju[$i]'");
+            if($ukuran_id){
+                for($i=0; $i<count($ukuran_id); $i++){
+                    mysqli_query($koneksi,"UPDATE barang_ukuran SET barang_id = '$barang_id',ukuran_id='$ukuran_id[$i]'");
                 }
             }
             foreach($gambar as $g){
@@ -224,23 +224,24 @@
     
             }
         }else{
-            if(!empty($ukuran_baju)){
-                mysqli_query($koneksi,"DELETE FROM barang_ukuran WHERE barang_id = '$barang_id'");
-                for($i=0; $i<count($ukuran_baju); $i++){
-                    mysqli_query($koneksi,"INSERT INTO barang_ukuran VALUES ($barang_id,$ukuran_baju[$i]");
+
+                foreach($gambar as $g){
+                    $gambar_lama=$g["gambar"];
+                    mysqli_query($koneksi,"UPDATE barang SET kategori_id='$kategori_id',nama_barang='$nama_barang',harga='$harga',deskripsi='$deskripsi',gambar='$gambar_lama' WHERE barang_id = '$barang_id' ");
+                    
+                    if($ukuran_id){
+                        mysqli_query($koneksi,"DELETE FROM barang_ukuran WHERE barang_id='$barang_id'");
+                        for($i=0; $i<count($ukuran_id); $i++){
+                            mysqli_query($koneksi,"INSERT INTO barang_ukuran VALUES('$barang_id','$ukuran_id[$i]')");
+                        }
+                    }
+
                 }
-            }
-
-            foreach($gambar as $g){
-                $gambar_lama=$g["gambar"];
-                mysqli_query($koneksi,"UPDATE barang SET kategori_id='$kategori_id',nama_barang='$nama_barang',harga='$harga',deskripsi='$deskripsi',gambar='$gambar_lama' WHERE barang_id = '$barang_id' ");
-
-            }
                    
         }
         
         return mysqli_affected_rows($koneksi);
-}
+    }
 
     function tambah_pengiriman($data){
         global $koneksi;

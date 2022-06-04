@@ -3,20 +3,20 @@
 <?php
 
   $barang_id=isset($_GET["barang_id"])?$_GET["barang_id"]:false;
-  $ukuran=isset($_GET["ukuran"])?$_GET["ukuran"]:false;
+  $ukuran_id=isset($_GET["ukuran_id"])?$_GET["ukuran_id"]:false;
   $kuantitas=isset($_GET["kuantitas"])?$_GET["kuantitas"]:false;
 
   $kategori_id=isset($_GET["kategori_id"])?$_GET["kategori_id"]:false;
 
-  if(isset($_GET["barang_id"]) && isset($_GET["ukuran"]) && isset($_GET["kuantitas"])){//jika sudah login
+  if(isset($_GET["barang_id"]) && isset($_GET["ukuran_id"]) && isset($_GET["kuantitas"])){//jika sudah login
       if(!empty($_SESSION["login"])){
           $barang_id=$_GET['barang_id'];
           $ukuran=$_GET['ukuran'];
           $kuantitas=$_GET['kuantitas'];
-          mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran','$kuantitas')");
+          mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran_id','$kuantitas')");
           header("Location: keranjang.php");
       }else{
-          header("Location: login.php?barang_id=$barang_id&ukuran=$ukuran&kuantitas=$kuantitas");
+          header("Location: login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas");
       }
   }
 ?>
@@ -123,20 +123,26 @@
             $barang=data("SELECT * FROM","barang WHERE kategori_id='$kategori_id'");//ambil data di tabel barang secara acak-->
           }else{
              $barang=data("SELECT * FROM","barang ORDER BY RAND()");//<!--ambil data di tabel barang secara acak-->
+
           }?>
-          <?php  $ukuran=data("SELECT nama_ukuran FROM","ukuran ORDER BY nama_ukuran ASC LIMIT 1");?>
           <?php foreach($barang as $b): ?><!--keluarin data-->
-          <div class="col-lg-3">
-            <div class="item-semua-kategori my-2">
-              <div class="gambar text-center">
-                <img class="img-fluid" src="images/barang/<?=$b['gambar'];?>" alt="" style="width: 150px; height:186px;">
-              </div>
-              <p class="m-0"><?=$b['nama_barang']; ?></p>
-              <p class="harga mb-2"><?=rupiah($b['harga']);?></p>
+            <div class="col-lg-3">
+              <div class="item-semua-kategori my-2">
+                <div class="gambar text-center">
+                  <img class="img-fluid" src="images/barang/<?=$b['gambar'];?>" alt="" style="width: 150px; height:186px;">
+                </div>
+                <p class="m-0"><?=$b['nama_barang']; ?></p>
+                <?php  $ukuran_user=data("SELECT nama_ukuran FROM","ukuran INNER JOIN barang_ukuran ON ukuran.ukuran_id = barang_ukuran.ukuran_id INNER JOIN barang ON barang.barang_id = barang_ukuran.barang_id WHERE barang_ukuran.barang_id = $b[barang_id]");?>
+                <small class="m-0">Ukuran : <?php foreach($ukuran_user as $uu): ?>
+                  <?=$uu["nama_ukuran"]?>,
+                                        <?php  endforeach; ?>
+                </small>
+                <p class="harga mb-2"><?=rupiah($b['harga']);?></p>
               <div class="btn-action">
                 <a href="detail.php?barang_id=<?=$b['barang_id']?>" class="btn btn-primary">Detail</a>
+                <?php  $ukuran=data("SELECT ukuran_id FROM","barang_ukuran INNER JOIN barang ON barang_ukuran.barang_id = barang.barang_id WHERE barang_ukuran.barang_id = $b[barang_id] ORDER BY barang_ukuran.ukuran_id DESC LIMIT 1");?>
                 <?php foreach($ukuran as $u): ?><!--keluarin data-->
-                  <a href="?barang_id=<?=$b['barang_id']?>&ukuran=<?=$u['nama_ukuran']?>&kuantitas=1" class="btn btn-cart btn-primary">Add To Cart +</a>
+                  <a href="index.php?barang_id=<?=$b['barang_id']?>&ukuran_id=<?=$u['ukuran_id']?>&kuantitas=1" class="btn btn-cart btn-primary">Add To Cart +</a>
                 <?php endforeach; ?>
                 </div>
               </div>
@@ -146,31 +152,43 @@
       </div><!--end container-->
     </section>
 
-    <section class="banner" id="banner">
+    <section class="banner py-3" id="banner">
       <div class="container">
         <div class="row">
-          <div class="col-lg-4">
-            <div class="item-banner">
-              <img class="float-left img-fluid mr-2" src="images/bag-check.svg" alt="">
-              <h5 class="text-white">ORIGINAL PRODUCTS</h5>
-              <p class="text-white">We always sell authentic original
-                product to our customer</p>
+          <div class="col-lg-4 col-sm-12 mb-3">
+            <div class="item-banner d-flex align-items-center">
+              <div class="mr-2">
+                <img class="img-fluid" src="images/bag-check.svg" alt="">
+              </div>
+              <div>
+                <h5 class="text-white my-1">ORIGINAL PRODUCTS</h5>
+                <small class="text-white m-0">We always sell authentic original
+                product to our customer</small>
+              </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="item-banner">
-              <img class="float-left img-fluid mr-2" src="images/truck.svg" alt="">
-              <h5 class="text-white">EXPRESS SHIPPING</h5>
-              <p class="text-white">Get all your orders delivered right
-                next day you place your order</p>
+          <div class="col-lg-4 col-sm-12 mb-3">
+            <div class="item-banner d-flex align-items-center">
+              <div class="mr-2">
+                <img class="img-fluid" src="images/truck.svg" alt="">
+              </div>
+              <div>
+                <h5 class="text-white my-1">EXPRESS SHIPPING</h5>
+                <small class="text-white m-0">Get all your orders delivered right
+                next day you place your order</small>
+              </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="item-banner">
-              <img class="float-left img-fluid mr-2" src="images/clock.svg" alt="">
-              <h5 class="text-white">24/7 SUPPORT</h5>
-              <p class="text-white">Our customer support team is ready to
-                help you in every point</p>
+          <div class="col-lg-4 col-sm-12 mb-3">
+            <div class="item-banner d-flex align-items-center">
+              <div class="mr-2">
+                <img class="img-fluid" src="images/clock.svg" alt="">
+              </div>
+              <div>
+                <h5 class="text-white my-1">24/7 SUPPORT</h5>
+                <small class="text-white m-0">Our customer support team is ready to
+                help you in every point</small>
+              </div>
             </div>
           </div>
         </div><!--end row-->
@@ -188,11 +206,17 @@
                       <img class="img-fluid" src="images/barang/<?=$b['gambar'];?>" alt="" style="width: 150px; height:186px;">
                     </div>
                     <p class="m-0"><?=$b['nama_barang']; ?></p>
+                    <?php  $ukuran_user=data("SELECT nama_ukuran FROM","ukuran INNER JOIN barang_ukuran ON ukuran.ukuran_id = barang_ukuran.ukuran_id INNER JOIN barang ON barang.barang_id = barang_ukuran.barang_id WHERE barang_ukuran.barang_id = $b[barang_id]");?>
+                    <small class="m-0">Ukuran : <?php foreach($ukuran_user as $uu): ?>
+                                                  <?=$uu["nama_ukuran"]?>,
+                                                <?php  endforeach; ?>
+                    </small>
                     <p class="harga mb-2">Rp<?=number_format($b['harga']);?></p>
                     <div class="btn-action">
-                      <a href="detail.php?barang_id=<?=$b['barang_id']?>" class="btn btn-primary">Detail</a>  
+                      <a href="detail.php?barang_id=<?=$b['barang_id']?>" class="btn btn-primary">Detail</a>
+                      <?php  $ukuran=data("SELECT ukuran_id FROM","barang_ukuran INNER JOIN barang ON barang_ukuran.barang_id = barang.barang_id WHERE barang_ukuran.barang_id = $b[barang_id] ORDER BY barang_ukuran.ukuran_id DESC LIMIT 1");?>
                     <?php foreach($ukuran as $u): ?><!--keluarin data-->
-                     <a href="?barang_id=<?=$b['barang_id']?>&ukuran=<?=$u['nama_ukuran']?>&kuantitas=1" class="btn btn-cart btn-primary">Add To Cart +</a>
+                     <a href="index.php?barang_id=<?=$b['barang_id']?>&ukuran_id=<?=$u['ukuran_id']?>&kuantitas=1" class="btn btn-cart btn-primary">Add To Cart +</a>
                     <?php endforeach; ?>
                   </div>
                 </div>

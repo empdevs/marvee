@@ -7,8 +7,9 @@
     }
 
     $barang_id=isset($_GET["barang_id"])?$_GET["barang_id"]:false;
-    $ukuran=isset($_GET["ukuran"])?$_GET["ukuran"]:false;
+    $ukuran_id=isset($_GET["ukuran_id"])?$_GET["ukuran_id"]:false;
     $kuantitas=isset($_GET["kuantitas"])?$_GET["kuantitas"]:false;
+    $email=isset($_GET["email"])?$_GET["email"]:false;
 
     if(isset($_POST["login"])){
         if(!empty($barang_id) || !empty($ukuran) || !empty($kuantitas)){
@@ -21,7 +22,7 @@
                             if(!password_verify($password,$user["password"])){
                                 echo "<script>
                                     alert('Password atau Email yang anda masukkan salah');
-                                    document.location.href='login.php';
+                                    document.location.href='login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas&email=$email';
                                 </script>";
                                 exit;
                             }else{
@@ -29,7 +30,7 @@
                                 $_SESSION["user_id"]=$user["user_id"];
                                 $_SESSION["username"]=$user["username"];
                                 $_SESSION["level"]=$user["level"];
-                                    $query=mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$_SESSION[user_id]','$barang_id','$ukuran','$kuantitas')");
+                                    $query=mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$_SESSION[user_id]','$barang_id','$ukuran_id','$kuantitas')");
                                     if(!empty($query)){
                                         echo "<script>
                                         alert('Login Berhasil');
@@ -41,7 +42,7 @@
                     }else{
                         echo "<script>
                             alert('Email Tidak terdaftar');
-                            document.location.href='login.php?barang_id=$barang_id&ukuran=$ukuran&kuantitas=$kuantitas';
+                            document.location.href='login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas&email=$email';
                         </script>";
                         }
                     exit;
@@ -55,7 +56,7 @@
                                 if(!password_verify($password,$user["password"])){
                                     echo "<script>
                                         alert('Password atau Email yang anda masukkan salah');
-                                        document.location.href='login.php';
+                                        document.location.href='login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas&email=$email';
                                     </script>";
                                     exit;
                                 }else{
@@ -63,7 +64,7 @@
                                     $_SESSION["user_id"]=$user["user_id"];
                                     $_SESSION["username"]=$user["username"];
                                     $_SESSION["level"]=$user["level"];
-                                        $query=mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$_SESSION[user_id]','$barang_id','$ukuran','$kuantitas')");
+                                        $query=mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$_SESSION[user_id]','$barang_id','$ukuran_id','$kuantitas')");
                                         if(!empty($query)){
                                             echo "<script>
                                             alert('Login Berhasil');
@@ -71,10 +72,11 @@
                                             </script>";
                                         }
                                     }
-                                }    
-                            }else{
+                            }    
+                        }else{
                                 echo "<script>
                                         alert('Email Tidak terdaftar');
+                                        document.location.href='login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas&email=$email';
                                 </script>";
                             }
                 }else{
@@ -86,7 +88,7 @@
                                 if(!password_verify($password,$user["password"])){
                                     echo "<script>
                                         alert('Password atau Email yang anda masukkan salah');
-                                        document.location.href='login.php';
+                                        document.location.href='login.php?email=$email';
                                     </script>";
                                 }else{
                                     $_SESSION["login"]=true;
@@ -109,6 +111,7 @@
                         }else{
                             echo "<script>
                                 alert('Email Tidak terdaftar');
+                                document.location.href='login.php?email=$email'
                             </script>";
                         }
                     }
@@ -140,7 +143,7 @@
                 <h3 class="text-center mt-3">Login</h3>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input class="form-control" type="text" name="email" id="email" required>
+                        <input class="form-control" type="text" name="email" id="email" required value="<?php if($email){ echo $email; } ?>">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>

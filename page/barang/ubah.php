@@ -27,7 +27,7 @@
             <select class="form-control" name="kategori_id" id="kategori_id">
             <?php foreach($barang as $b):?>
                
-                <option disabled value="<?=$b["kategori_id"]?>"><?= $b["nama_kategori"];?></option>
+                <option selected value="<?=$b["kategori_id"]?>"><?= $b["nama_kategori"];?></option>
             <?php endforeach; ?>
             <?php foreach($kategori as $k):?>
                 <option value="<?=$k["kategori_id"]?>"><?= $k["nama_kategori"];?></option>

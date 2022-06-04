@@ -13,7 +13,7 @@ if(isset($_GET["keranjang_id"])){
     hapus("keranjang WHERE keranjang_id='$keranjang_id'");
 }
 
-  $keranjang = data("SELECT * FROM","keranjang WHERE user_id='$user_id'");//pilih semua yang ada didalem tabel keranjang berdasarkan user_id saat ini
+  $keranjang = data("SELECT * FROM","keranjang INNER JOIN ukuran ON keranjang.ukuran_id = ukuran.ukuran_id WHERE user_id='$user_id'");//pilih semua yang ada didalem tabel keranjang berdasarkan user_id saat ini
 ?>
 <section class="keranjang" id="keranjang">
     <div class="container">
@@ -65,7 +65,7 @@ if(isset($_GET["keranjang_id"])){
                         <?php foreach($keranjang as $k):?><!--keluarin data keranjang yang atas tadi-->
                         <?php
                             $keranjang_id=$k['keranjang_id'];
-                            $ukuran=$k['ukuran'];
+                            $ukuran=$k['nama_ukuran'];
                             $kuantitas=$k['kuantitas'];
                             $barang_id=$k['barang_id'];
                         ?>

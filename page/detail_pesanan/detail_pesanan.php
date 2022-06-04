@@ -58,27 +58,24 @@ $pesanan=data("SELECT * FROM","pesanan WHERE pesanan_id='$id'");?>
 		<tbody>
 		<?php $no = 1; ?>
 		<?php $total = 0; ?>
-		<?php $barang_pesanan=data("SELECT * FROM","pesanan_detail WHERE pesanan_id='$id'"); ?>
-		<?php foreach ($barang_pesanan as $bp): ?>
-			<?php $barang_id= $bp["barang_id"];?>
-			<?php $barang = data("SELECT nama_barang,harga FROM","barang WHERE barang_id='$barang_id'"); ?>
-			<?php foreach ($barang as $b):?>
-				<?php $harga = $b["harga"]; $nama_barang = $b["nama_barang"];?>
-			<?php endforeach; ?>
+		
+		<?php $barang_pesanan=data("SELECT * FROM","pesanan_detail INNER JOIN barang ON pesanan_detail.barang_id = barang.barang_id INNER JOIN ukuran ON pesanan_detail.ukuran_id = ukuran.ukuran_id WHERE pesanan_id='$id'"); ?>
+		<?php foreach($barang_pesanan as $bp):?>
 			<tr>
 				<th scope="row"><?=$no;?></th>
-				<td><?=$nama_barang;?></td>
-				<td><?= rupiah($harga);?></td>
+				<td><?=$bp["nama_barang"];?></td>
+				<td><?= rupiah($bp["harga"]);?></td>
 				<td class="text-center"><?=$bp["kuantitas"];?></td>
-				<td><?=$bp["ukuran"];?></td>
+				<td><?=$bp["nama_ukuran"];?></td>
 				<td>
-					<?php $subtotal = $harga * $bp["kuantitas"];?>
+					<?php $subtotal = $bp["harga"] * $bp["kuantitas"];?>
 					<?= rupiah($subtotal);?>
 					<?php $total = $total + $subtotal; ?>
 				</td>
 			</tr>
-		<?php $no++; ?>
+			<?php $no++; ?>
 		<?php endforeach;?>
+		
 		<tr>
 			<td colspan="4"></td>
 			<td>Ongkos Kirim</td>

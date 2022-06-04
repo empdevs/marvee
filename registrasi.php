@@ -145,7 +145,7 @@ session_start();
 <section class="registrasi" id="registrasi">
     <div class="container">
         <div class="row align-items-center">
-        <div class="col-lg-6">
+        <div class="col-lg-6 d-none d-lg-block d-xl-none d-none d-xl-block d-xxl-none">
             <img class="img-fluid" src="images/undraw_Create_re_57a3.svg" alt="gambar">
         </div>
             <div class="col-lg-4 offset-lg-1">

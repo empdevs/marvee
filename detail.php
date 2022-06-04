@@ -9,46 +9,49 @@ if(isset($_POST["keranjang"])){//jika tombol Add to Cart+ ditekan jalankan aksi 
         $_POST["kuantitas"] = 1;
     }
     //ambil data
-    $ukuran =htmlspecialchars($_POST["ukuran"]);
+    $ukuran_id =htmlspecialchars($_POST["ukuran_id"]);
     $kuantitas = htmlspecialchars(($_POST["kuantitas"]));
 
     if(empty($user_id)){
-        header("Location: login.php?barang_id=$barang_id&ukuran=$_POST[ukuran]&kuantitas=$_POST[kuantitas]");
+        header("Location: login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas");
+        $_SESSION["checkout"]=true;
         exit;
     }
    
 //jika barang sejenis sudah ada di keranjang
-    $data_keranjang = data("SELECT barang_id,ukuran,kuantitas FROM","keranjang WHERE user_id='$user_id'");//pilih kolom barang_id dll di tabel keranjang berdasarkan user_id saat ini;
+    $data_keranjang = data("SELECT barang_id,ukuran_id,kuantitas FROM","keranjang WHERE user_id='$user_id'");//pilih kolom barang_id dll di tabel keranjang berdasarkan user_id saat ini;
 if($data_keranjang){//jika data keranjang ada ? 
     foreach($data_keranjang as $dk){//keluarkan data
-        if($dk["barang_id"] == $barang_id && $dk["ukuran"] == $ukuran){//jika barang_id dan ukurannya sama jalankan aksi ini ,Jika tidak silahkan kebawah njir jangan keesini lu salah jalan
+        if($dk["barang_id"] == $barang_id && $dk["ukuran_id"] == $ukuran_id){//jika barang_id dan ukurannya sama jalankan aksi ini ,Jika tidak silahkan kebawah njir jangan keesini lu salah jalan
             $kuantitas += $dk["kuantitas"]; //kuantitas user(baru) + kuantitas(lama)/kuantitas di database
-            mysqli_query($koneksi,"UPDATE keranjang SET kuantitas = '$kuantitas' WHERE barang_id='$barang_id'");//ubah kuantitas = kuantitas terbaru yang ada didalam tabel keranjang berdasarkan barang_id nya
+            mysqli_query($koneksi,"UPDATE keranjang SET kuantitas = '$kuantitas' WHERE barang_id='$barang_id' AND ukuran_id = '$ukuran_id'");//ubah kuantitas = kuantitas terbaru yang ada didalam tabel keranjang berdasarkan barang_id nya
             header("Location: keranjang.php");
             exit;//stop njir jan diterusin
         }
     }
 }
-    mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran','$kuantitas')");//kalo data baru baru jalanin ini
+    mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran_id','$kuantitas')");//kalo data baru baru jalanin ini
     header("Location: keranjang.php");
     
 }elseif(isset($_POST["checkout"])){
     if($_POST["kuantitas"] < 1){
         $_POST["kuantitas"] = 1;
     }
-    $ukuran =htmlspecialchars($_POST["ukuran"]);
+    $ukuran_id =htmlspecialchars($_POST["ukuran_id"]);
     $kuantitas = htmlspecialchars(($_POST["kuantitas"]));
     
     if(empty($user_id)){
-        header("Location: login.php?barang_id=$barang_id&ukuran=$_POST[ukuran]&kuantitas=$_POST[kuantitas]");
+        echo "<script>
+                document.location.href='login.php?barang_id=$barang_id&ukuran_id=$ukuran_id&kuantitas=$kuantitas';    
+            </script>";
         $_SESSION["checkout"]=true;
         exit;
     }
 
-    $data_keranjang = data("SELECT barang_id,ukuran,kuantitas FROM","keranjang WHERE user_id='$user_id'");//pilih kolom barang_id dll di tabel keranjang berdasarkan user_id saat ini;
+    $data_keranjang = data("SELECT barang_id,ukuran_id,kuantitas FROM","keranjang WHERE user_id='$user_id'");//pilih kolom barang_id dll di tabel keranjang berdasarkan user_id saat ini;
     if($data_keranjang){//jika data keranjang ada ? 
         foreach($data_keranjang as $dk){//keluarkan data
-            if($dk["barang_id"] == $barang_id && $dk["ukuran"] == $ukuran){//jika barang_id dan ukurannya sama jalankan aksi ini ,Jika tidak silahkan kebawah njir jangan keesini lu salah jalan
+            if($dk["barang_id"] == $barang_id && $dk["ukuran_id"] == $ukuran_id){//jika barang_id dan ukurannya sama jalankan aksi ini ,Jika tidak silahkan kebawah njir jangan keesini lu salah jalan
                 $kuantitas += $dk["kuantitas"]; //kuantitas user(baru) + kuantitas(lama)/kuantitas di database
                 mysqli_query($koneksi,"UPDATE keranjang SET kuantitas = '$kuantitas' WHERE barang_id='$barang_id'");//ubah kuantitas = kuantitas terbaru yang ada didalam tabel keranjang berdasarkan barang_id nya
                 header("Location: checkout.php");
@@ -57,8 +60,10 @@ if($data_keranjang){//jika data keranjang ada ?
         }
     }
     
-    mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran','$kuantitas')");//kalo data baru baru jalanin ini
-    header("Location: checkout.php");
+    mysqli_query($koneksi,"INSERT INTO keranjang VALUES('','$user_id','$barang_id','$ukuran_id','$kuantitas')");//kalo data baru baru jalanin ini
+    echo "<script>
+        document.location.href='checkout.php';        
+    </script>";
 }
 ?>
 <section class="detail" id="detail">
@@ -101,8 +106,8 @@ if($data_keranjang){//jika data keranjang ada ?
                                         <?php 
                                                 $customcheck = $uk['nama_ukuran'];
                                         ?>
-                                            <input class="form-check-input" type="radio" name="ukuran" id="inlineRadio<?=$customcheck?>" value="<?= $uk["ukuran_id"] ?>">
-                                            <label class="form-check-label" for="inlineRadio1"><?= $uk["nama_ukuran"] ?></label>
+                                            <input class="form-check-input" type="radio" name="ukuran_id" id="inlineRadio<?=$customcheck?>" value="<?= $uk["ukuran_id"] ?>" required >
+                                            <label class="form-check-label" for="inlineRadio<?=$customcheck?>"><?= $uk["nama_ukuran"] ?></label>
                                     </div>
                                 <?php endforeach;?>
                                 
@@ -111,7 +116,7 @@ if($data_keranjang){//jika data keranjang ada ?
                             <div class="row my-4">
                                     <div class="col-6">Kuantitas</div>
                                     <div class="col-6">
-                                        <input type="text" name="kuantitas" class="form-control" style="width: 40%;" value="1" min="1" max="100">
+                                        <input type="number" name="kuantitas" class="form-control" style="width: 40%;" value="1" min="1" max="100" required>
                                     </div><!--end col-->
                             </div><!--end row-->
                     

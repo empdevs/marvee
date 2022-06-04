@@ -5,7 +5,7 @@ if(empty($_SESSION["user_id"])){
     header("Location: login.php");
     exit;
 }
-$keranjang = data("SELECT * FROM","keranjang WHERE user_id='$user_id'");
+$keranjang = data("SELECT * FROM","keranjang INNER JOIN ukuran ON keranjang.ukuran_id = ukuran.ukuran_id WHERE user_id='$user_id'");
 if(empty($keranjang)){//jika keranjang kosong gaboleh kesini :)
     header("Location: keranjang.php");
 }
@@ -27,17 +27,18 @@ if(isset($_POST["buat_pesanan"])){//jika tombol buat pesanan di gunakan jalankan
    }else{
         mysqli_query($koneksi,"INSERT INTO pesanan VALUES('','$user_id','$invoice','$nama_penerima','$alamat','$telepon','$provinsi','$kota','$jasa_pengiriman','$rekening','$status','$tanggal')");//masukin data ke tabel pesanan
 
-        $keranjang = data("SELECT * FROM","keranjang WHERE user_id='$user_id'");//ulang data keranjang
+        $keranjang = data("SELECT * FROM","keranjang INNER JOIN ukuran ON keranjang.ukuran_id = ukuran.ukuran_id WHERE user_id='$user_id'");//ulang data keranjang
+    
         foreach($keranjang as $k){
             $barang_id=$k['barang_id'];
-            $ukuran=$k['ukuran'];
+            $ukuran_id=$k['ukuran_id'];
             $kuantitas=$k['kuantitas'];
 
             $pesanan=data("SELECT pesanan_id FROM","pesanan WHERE user_id='$user_id'");//ulang pesanan_id
             foreach($pesanan as $p){
                 $pesanan_id=$p['pesanan_id'];
             }
-            mysqli_query($koneksi,"INSERT INTO pesanan_detail VALUES('','$pesanan_id','$user_id','$barang_id','$ukuran','$kuantitas')");//masukin data ke tabel pesanan detail
+            mysqli_query($koneksi,"INSERT INTO pesanan_detail VALUES('','$pesanan_id','$user_id','$barang_id','$ukuran_id','$kuantitas')");//masukin data ke tabel pesanan detail
         }
 
         mysqli_query($koneksi,"DELETE FROM keranjang WHERE user_id='$user_id'");//hapus isi keranjang
@@ -45,7 +46,9 @@ if(isset($_POST["buat_pesanan"])){//jika tombol buat pesanan di gunakan jalankan
 
     
 
-    header("Location: pembayaran.php?rekening=$rekening");//pindah ke halaman selanjutnya
+   echo"<script>
+            document.location.href='pembayaran.php?rekening=$rekening';
+        </script>";//pindah ke halaman selanjutnya
    
 }
 ?>
@@ -127,7 +130,7 @@ if(isset($_POST["buat_pesanan"])){//jika tombol buat pesanan di gunakan jalankan
                                     <?php foreach($keranjang as $k): ?>
                                         <?php
                                             $barang_id=$k['barang_id'];
-                                            $ukuran=$k['ukuran'];
+                                            $ukuran=$k['nama_ukuran'];
                                             $kuantitas=$k['kuantitas'];
                                         ?>
                                     <?php $barang = data("SELECT * FROM","barang WHERE barang_id='$barang_id'");?>

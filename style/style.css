@@ -409,16 +409,16 @@ select#ukuran {
 
 /* login */
 .login{
-    background: url(../images/bg-login.svg) no-repeat center center;
-    /* background: linear-gradient(90deg, rgba(255,255,255,1) 71%, rgba(2,134,231,1) 71%); */
+    background: url(../images/bg-login.svg) center center no-repeat;
     background-size: cover;
-    min-height: 625px;
-    display: flex;
-    align-items: center;
-    color: #707070;
+    min-height:100vh;
     padding: 30px;
+    color: #707070;
 }
-@media (max-width: 991.98px) { 
+@media (max-width: 991.98px) {  
+    .login{
+        background:#fff;
+    }
     .login img{
         margin-bottom: 30px;
     }
@@ -446,10 +446,14 @@ select#ukuran {
 .registrasi{
     background: url(../images/bg-login.svg) center center no-repeat;
     background-size: cover;
+    min-height:100vh;
     padding: 30px;
     color: #707070;
 }
     @media (max-width: 991.98px) { 
+        .registrasi{
+            background:#fff;
+        }
         .registrasi img{
             margin-bottom: 30px;
         }

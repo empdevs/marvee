@@ -4,6 +4,7 @@ $user_id=isset($_SESSION["user_id"])?$_SESSION["user_id"]:false;
 $username=isset($_SESSION["username"])?$_SESSION["username"]:false;
 $login=isset($_SESSION["login"])?$_SESSION["login"]:false;
 $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,6 +17,9 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="easySelect/easySelectStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Marvee</title>
   </head>
   
@@ -75,6 +79,7 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
       </nav>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
+          <div class="row">
         <?php if($user_id):?>
             <a class="nav-link text-white"><img src="images/person-fill.svg" alt=""> Hii <?=$username;?></a>
             <a class="nav-link text-white nav-profile mr-3" href="my-profile.php">My Profile</a>
@@ -82,16 +87,6 @@ $level=isset($_SESSION["level"])?$_SESSION["level"]:false;
         <?php else: ?>
             <a class="nav-link text-white nav-login" href="login.php"><img src="images/person-fill.svg" alt=""> Login / Register</a>
         <?php endif; ?>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav mx-auto">
-              <a class="nav-link text-white" href="#">Home</a>
-              <a class="nav-link text-white" href="#">Kategori</a>
-              <a class="nav-link text-white" href="#">Produk</a>
-              <a class="nav-link text-white" href="#">Kontak</a>
-            </div>
           </div>
         </div><!--end container-->
       </nav>
